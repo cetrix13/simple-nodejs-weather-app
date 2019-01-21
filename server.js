@@ -1,12 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
-const app = express()
+const app = express();
 
 const apiKey = '92aec0fba12c86d15205ef54bdc3aee3'; // My API key
 
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.set('view engine', 'ejs')
 
 app.get('/', function (req, res) {

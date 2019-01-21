@@ -1,11 +1,10 @@
 let request = require('supertest');
 let app = require('../server.js');
 
-
 /**
- * Test a root URL
+ * Test that root is accessible
  */
-describe('Test the root path accesable', () => {
+describe('Test that root is accessible', () => {
     test('It should response with success code', (done) => {
         request(app).get('/').then((response) => {
             expect(response.statusCode).toBe(200);
@@ -15,13 +14,13 @@ describe('Test the root path accesable', () => {
 });
 
 /**
- * Test a post request with params return ERROR
+ * Test that a request with wrong params returns ERROR
  */
-describe('Test error', ()=> {
+describe('Test that a request with wrong params returns ERROR', ()=> {
     test('It shoud resposnse with error HTML', (done) => {
         request(app)
         .post('/')
-        .send({ city: 'Berlin'})
+        .send({ city: 'Unknown city'})
         .expect('Content-Type', /html/)
         .then(response => {
             expect(response.type).toEqual("text/html");
@@ -32,9 +31,9 @@ describe('Test error', ()=> {
 });
 
 /**
- * Test a post request with params is success.
+ * Test that a request with correct params returns result
  */
-describe('Test POST with city', () => {
+describe('Test that a request with correct params returns result', () => {
     test('It should resposnse with success HTML', (done) => {
        request(app)
         .post('/')
@@ -43,7 +42,7 @@ describe('Test POST with city', () => {
         .then(response => {
             expect(response.type).toEqual("text/html");
             expect(response.text).toMatch("degrees in Berlin");
-            done()
+            done();
         })
     });
     app.close(); // close app to prevent error of Jest not exiting after test completed
